@@ -17,7 +17,7 @@ class Post(Base):
 
 with Session(engine) as db:
     posts = db.scalars(select(Post)).all()
-
+    print(posts)
     for post in posts:
         print(post.id, post.title, post.content)
 
