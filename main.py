@@ -75,3 +75,32 @@ def post_detail(request: Request, post_id: int):
         name='detail.html',
         context={'post': post}
     )
+
+
+@app.get('/posts/{post_id}/edit')
+def post_edit(request: Request, post_id: int):
+    with Session(engine) as db:
+        post = db.get(Post, post_id)
+
+    if post is None:
+        raise HTTPException(status_code=404, detail='없는게시물')
+
+    return templates.TemplateResponse(
+        request=request,
+        name='edit.html',
+        context={'post': post}
+    )
+
+
+@app.post('/posts/{post_id}/update')
+def post_update(post_id: int, title: str = Form(), content: str = Form()):
+    with Session(engine) as db:
+        post = db.get(Post, post_id)
+
+        post.title = title
+        post.content = content
+
+        db.commit()
+
+    return RedirectResponse(f'/posts/{post_id}', status_code=303)
+
