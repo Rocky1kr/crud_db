@@ -31,5 +31,18 @@ def post_list(request: Request):
             request=request,
             name='list.html',
             context={'posts': posts}
-        );
+        )
+
+@app.get('/posts/{post_id}')
+def post_detail(request: Request, post_id: int):
+    with Session(engine) as db:
+        post = db.get(Post, post_id)
+
+    return templates.TemplateResponse(
+        request=request,
+        name='detail.html',
+        context={'post': post}
+
+    )
+
     
