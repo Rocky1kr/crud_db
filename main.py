@@ -104,3 +104,12 @@ def post_update(post_id: int, title: str = Form(), content: str = Form()):
 
     return RedirectResponse(f'/posts/{post_id}', status_code=303)
 
+
+@app.post('/posts/{post_id}/delete')
+def post_delete(post_id: int):
+    with Session(engine) as db:
+        post = db.get(Post, post_id)
+        db.delete(post)
+        db.commit()
+
+    return RedirectResponse('/posts', status_code=303)
