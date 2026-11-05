@@ -36,7 +36,6 @@ def post_list(request: Request):
         )
 
 
-
 @app.get('/posts/new')
 def post_new(request: Request):
     return templates.TemplateResponse(
@@ -49,18 +48,19 @@ def post_new(request: Request):
 def post_create(title: str = Form(), content: str = Form()):
     with Session(engine) as db:
         post = Post(title=title, content=content)
-        # print(f'add 전: , {post.id}')
+        # print(f'add 전 : {post.id}')
         db.add(post)
-        # print(f'add 후: , {post.id}')
+        # print(f'add 후 : {post.id}')
         db.commit()
-        # print(f'commit 후: , {post.id}')
+        # print(f'commit 후 : {post.id}')
 
-        #from fastapi.responses import RedirectResponse
-        return RedirectResponse('/posts/{post.id}')
+       
+        # from fastapi.responses import RedirectResponse
+        return RedirectResponse(f'/posts/{post.id}', status_code=303)
 
-
-# /posts/new 와 동작이 겹쳐서
-# 우선순위를 낮추기위해 아래로 이동
+    
+# /posts/new 와 동작이 겹쳐서 
+# 우선순위를 낮추기 위해 아래로 이동
 @app.get('/posts/{post_id}')
 def post_detail(request: Request, post_id: int):
     with Session(engine) as db:
@@ -74,5 +74,4 @@ def post_detail(request: Request, post_id: int):
         request=request,
         name='detail.html',
         context={'post': post}
-
     )
