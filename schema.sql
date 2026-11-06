@@ -7,3 +7,9 @@ CREATE TABLE posts (
 INSERT INTO posts (title, content) VALUES
 ('my first post', 'hello!!'), 
 ('안녕하세요', '반갑습니다');
+
+CREATE TABLE comments (
+    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    post_id bigint NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    content text NOT NULL
+);

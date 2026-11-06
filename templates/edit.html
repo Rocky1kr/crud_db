@@ -94,10 +94,10 @@
       <h1>글 수정</h1>
       <form class="card" action="/posts/{{post.id}}/update" method="post">
         <label for="title">제목</label>
-        <input type="text" id="title" name="title" value="{{post.title}}" />
+        <input type="text" id="title" name="title" value="{{post.title}}" required />
 
         <label for="content">내용</label>
-        <textarea id="content" name="content">{{post.content}}</textarea>
+        <textarea id="content" name="content" required>{{post.content}}</textarea>
 
         <div class="actions">
           <a class="btn btn-sub" href="/posts/{{post.id}}">취소</a>

@@ -18,6 +18,13 @@ class Post(Base):
     title: Mapped[str]
     content: Mapped[str]
 
+class Comment(Base):
+    __tablename__ = 'comments'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    post_id: Mapped[int]
+    content: Mapped[str]
+
 app = FastAPI()
 templates = Jinja2Templates(directory='templates')
 
@@ -65,6 +72,9 @@ def post_create(title: str = Form(), content: str = Form()):
 def post_detail(request: Request, post_id: int):
     with Session(engine) as db:
         post = db.get(Post, post_id)
+        comments = db.scalars(
+            select(Comment).where(Comment.post_id == post_id).order_by(Comment.id)
+        ).all()
 
     if post is None:
         raise HTTPException(status_code=404, detail='게시물이 없어요')
@@ -73,8 +83,19 @@ def post_detail(request: Request, post_id: int):
     return templates.TemplateResponse(
         request=request,
         name='detail.html',
-        context={'post': post}
+        context={'post': post, 'comments': comments}
     )
+
+
+@app.post('/posts/{post_id}/comments')
+def comment_create(post_id: int, content: str = Form()):
+    with Session(engine) as db:
+        if db.get(Post, post_id) is None:
+            raise HTTPException(status_code=404, detail='게시물이 없어요')
+        db.add(Comment(post_id=post_id, content=content))
+        db.commit()
+
+    return RedirectResponse(f'/posts/{post_id}', status_code=303)
 
 
 @app.get('/posts/{post_id}/edit')

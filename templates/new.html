@@ -94,10 +94,10 @@
       <h1>글쓰기</h1>
       <form class="card" action="/posts/create" method="post">
         <label for="title">제목</label>
-        <input type="text" id="title" name="title" />
+        <input type="text" id="title" name="title" required />
 
         <label for="content">내용</label>
-        <textarea id="content" name="content"></textarea>
+        <textarea id="content" name="content" required></textarea>
 
         <div class="actions">
           <a class="btn btn-sub" href="/posts">취소</a>
