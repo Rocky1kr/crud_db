@@ -3,6 +3,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session
 from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 DB_URL = "postgresql+psycopg://sd4:sd4@localhost:5432/board"
 engine = create_engine(DB_URL)
@@ -26,6 +27,8 @@ class Comment(Base):
     content: Mapped[str]
 
 app = FastAPI()
+# static 폴더의 CSS 파일을 /static 주소로 브라우저에 보내줌
+app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory='templates')
 
 @app.get('/')

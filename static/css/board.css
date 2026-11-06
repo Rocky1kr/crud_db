@@ -1,0 +1,250 @@
+/* 게시판 공통 스타일 - Bootstrap 위에 DESIGN.md 색상/크기를 덮어씁니다.
+   Bootstrap 클래스 이름과 겹치지 않도록 모든 클래스는 board- 로 시작합니다. */
+
+/* ===== 색상 변수 =====
+   <html data-bs-theme="dark"> 이면 다크 색, "light" 이면 라이트 색을 씁니다.
+   아래 스타일들은 색을 직접 쓰지 않고 var(--board-...) 이름으로 가져다 씁니다. */
+
+:root,
+[data-bs-theme="dark"] {
+  --board-bg: #1a1d1e;            /* 페이지 배경 */
+  --board-text: #e8eaea;          /* 기본 글자 */
+  --board-sub: #a0a6a8;           /* 보조 글자 */
+  --board-line: #3a3f41;          /* 바깥 테두리 / 머리글 아래 선 */
+  --board-row-line: #2c3032;      /* 줄 사이 구분선 */
+  --board-hover: #23272a;         /* 줄 hover 배경 */
+  --board-badge-bg: #2a2f31;      /* 뱃지 배경 */
+  --board-btn-bg: #e8ecf4;        /* 버튼 배경 */
+  --board-btn-text: #1a1d1e;      /* 버튼 글자 */
+  --board-btn-hover: #ffffff;     /* 버튼 hover 배경 */
+  --board-input-bg: #23272a;      /* 입력칸 배경 */
+  --board-accent: #ff4d4f;        /* 강조 */
+}
+
+[data-bs-theme="light"] {
+  --board-bg: #f5f6f7;
+  --board-text: #1a1d1e;
+  --board-sub: #5f6668;
+  --board-line: #d5d9db;
+  --board-row-line: #e4e7e8;
+  --board-hover: #eef0f1;
+  --board-badge-bg: #e8ebec;
+  --board-btn-bg: #1a1d1e;
+  --board-btn-text: #ffffff;
+  --board-btn-hover: #3a3f41;
+  --board-input-bg: #ffffff;
+  --board-accent: #ff4d4f;
+}
+
+.board-body {
+  padding: 24px 16px;
+  background: var(--board-bg);
+  color: var(--board-text);
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+}
+
+.board-wrap {
+  max-width: 900px;
+}
+
+.board-h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* 글쓰기 버튼: Bootstrap .btn 의 변수만 바꿔서 색을 입힘 */
+.board-btn {
+  --bs-btn-padding-x: 18px;
+  --bs-btn-padding-y: 10px;
+  --bs-btn-font-size: 14px;
+  --bs-btn-font-weight: bold;
+  --bs-btn-border-radius: 8px;
+  --bs-btn-color: var(--board-btn-text);
+  --bs-btn-bg: var(--board-btn-bg);
+  --bs-btn-border-color: var(--board-btn-bg);
+  --bs-btn-hover-color: var(--board-btn-text);
+  --bs-btn-hover-bg: var(--board-btn-hover);
+  --bs-btn-hover-border-color: var(--board-btn-hover);
+  --bs-btn-active-color: var(--board-btn-text);
+  --bs-btn-active-bg: var(--board-btn-hover);
+  --bs-btn-active-border-color: var(--board-btn-hover);
+}
+
+/* 표를 감싸는 둥근 테두리 */
+.board-card {
+  border: 1px solid var(--board-line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* 표: Bootstrap .table 의 변수만 바꿔서 색을 입힘 */
+.board-table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--board-text);
+  --bs-table-border-color: var(--board-row-line);
+  --bs-table-hover-bg: var(--board-hover);
+  --bs-table-hover-color: var(--board-text);
+}
+
+.board-table thead th {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--board-sub);
+  border-bottom-color: var(--board-line);
+}
+
+.board-table tbody td {
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+.board-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.board-num {
+  width: 90px;
+  text-align: center;
+}
+
+/* 번호 뱃지: Bootstrap .badge + .rounded-pill 위에 색만 바꿈 */
+.board-badge {
+  --bs-badge-padding-y: 4px;
+  --bs-badge-font-size: 13px;
+  --bs-badge-font-weight: normal;
+  --bs-badge-color: var(--board-sub);
+  min-width: 52px;
+  background: var(--board-badge-bg);
+}
+
+.board-title-link {
+  color: var(--board-text);
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.board-title-link:hover {
+  color: var(--board-text);
+  text-decoration: underline;
+}
+
+.board-empty {
+  padding: 40px !important;
+  color: var(--board-sub) !important;
+}
+
+/* ===== 상세 페이지 (detail.html) ===== */
+
+.board-post-title {
+  padding: 16px;
+  font-size: 30px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--board-line);
+}
+
+.board-post-content {
+  min-height: 160px;
+  padding: 24px 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* 보조 버튼 (게시판으로 이동, 취소, 테마 전환) */
+.board-btn-sub {
+  --bs-btn-padding-x: 18px;
+  --bs-btn-padding-y: 10px;
+  --bs-btn-font-size: 14px;
+  --bs-btn-font-weight: bold;
+  --bs-btn-border-radius: 8px;
+  --bs-btn-color: var(--board-sub);
+  --bs-btn-bg: var(--board-badge-bg);
+  --bs-btn-border-color: var(--board-badge-bg);
+  --bs-btn-hover-color: var(--board-text);
+  --bs-btn-hover-bg: var(--board-hover);
+  --bs-btn-hover-border-color: var(--board-hover);
+  --bs-btn-active-color: var(--board-text);
+  --bs-btn-active-bg: var(--board-hover);
+  --bs-btn-active-border-color: var(--board-hover);
+}
+
+/* 삭제 버튼: 보조 버튼 모양 + 강조색 글자 */
+.board-btn-danger {
+  --bs-btn-padding-x: 18px;
+  --bs-btn-padding-y: 10px;
+  --bs-btn-font-size: 14px;
+  --bs-btn-font-weight: bold;
+  --bs-btn-border-radius: 8px;
+  --bs-btn-color: var(--board-accent);
+  --bs-btn-bg: var(--board-badge-bg);
+  --bs-btn-border-color: var(--board-badge-bg);
+  --bs-btn-hover-color: var(--board-accent);
+  --bs-btn-hover-bg: var(--board-hover);
+  --bs-btn-hover-border-color: var(--board-hover);
+  --bs-btn-active-color: var(--board-accent);
+  --bs-btn-active-bg: var(--board-hover);
+  --bs-btn-active-border-color: var(--board-hover);
+}
+
+/* 댓글 */
+.board-h2 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.board-comment-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--board-row-line);
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.board-comment-item:last-child {
+  border-bottom: 0;
+}
+
+.board-comment-item:hover {
+  background: var(--board-hover);
+}
+
+.board-comment-empty {
+  padding: 24px;
+  color: var(--board-sub);
+  font-size: 14px;
+}
+
+/* ===== 입력 폼 (new.html, edit.html, 댓글) ===== */
+
+.board-label {
+  font-size: 14px;
+  color: var(--board-sub);
+}
+
+/* Bootstrap .form-control 위에 색만 덮어씀 */
+.board-input {
+  padding: 12px 14px;
+  background: var(--board-input-bg);
+  color: var(--board-text);
+  border-color: var(--board-line);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.board-input:focus {
+  background: var(--board-input-bg);
+  color: var(--board-text);
+  border-color: var(--board-btn-bg);
+  box-shadow: none;
+}
+
+.board-textarea {
+  min-height: 220px;
+  line-height: 1.6;
+}
+
+.board-comment-textarea {
+  min-height: 90px;
+  line-height: 1.6;
+}
