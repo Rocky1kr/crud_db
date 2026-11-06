@@ -1,15 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/posts/{{post.id}}/update" method="post">
-        <input type="text" value="{{post.title}}" name="title">
-        <input type="text" value="{{post.content}}" name="content">
-        <input type="submit">
-    </form>
-</body>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>글 수정</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 24px 16px;
+        background: #1a1d1e;
+        color: #e8eaea;
+        font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin: 0 0 16px;
+        font-size: 30px;
+      }
+      .card {
+        border: 1px solid #3a3f41;
+        border-radius: 10px;
+        padding: 20px 16px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #a0a6a8;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 12px 14px;
+        background: #23272a;
+        color: #e8eaea;
+        border: 1px solid #3a3f41;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 16px;
+      }
+      textarea {
+        min-height: 220px;
+        resize: vertical;
+        line-height: 1.6;
+      }
+      input[type="text"]:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #e8ecf4;
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 18px;
+        background: #e8ecf4;
+        color: #1a1d1e;
+        border: none;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn:hover {
+        background: #fff;
+      }
+      .btn-sub {
+        background: #2a2f31;
+        color: #a0a6a8;
+      }
+      .btn-sub:hover {
+        background: #23272a;
+        color: #e8eaea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>글 수정</h1>
+      <form class="card" action="/posts/{{post.id}}/update" method="post">
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" value="{{post.title}}" />
+
+        <label for="content">내용</label>
+        <textarea id="content" name="content">{{post.content}}</textarea>
+
+        <div class="actions">
+          <a class="btn btn-sub" href="/posts/{{post.id}}">취소</a>
+          <input class="btn" type="submit" value="수정완료" />
+        </div>
+      </form>
+    </div>
+  </body>
 </html>

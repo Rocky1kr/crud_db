@@ -1,20 +1,107 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>{{ post.title }}</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 24px 16px;
+        background: #1a1d1e;
+        color: #e8eaea;
+        font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .card {
+        border: 1px solid #3a3f41;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .card-title {
+        margin: 0;
+        padding: 16px;
+        font-size: 30px;
+        border-bottom: 1px solid #3a3f41;
+      }
+      .card-content {
+        margin: 0;
+        padding: 24px 16px;
+        font-size: 16px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        min-height: 160px;
+      }
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+      }
+      .actions-right {
+        display: flex;
+        gap: 8px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 18px;
+        background: #e8ecf4;
+        color: #1a1d1e;
+        border: none;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn:hover {
+        background: #fff;
+      }
+      .btn-sub {
+        background: #2a2f31;
+        color: #a0a6a8;
+      }
+      .btn-sub:hover {
+        background: #23272a;
+        color: #e8eaea;
+      }
+      .btn-danger {
+        background: #2a2f31;
+        color: #ff4d4f;
+      }
+      .btn-danger:hover {
+        background: #23272a;
+      }
+      form {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
+    <div class="container">
+      <div class="card">
+        <h1 class="card-title">{{ post.title }}</h1>
+        <p class="card-content">{{ post.content }}</p>
+      </div>
 
-    <a href="/posts/{{post.id}}/edit">수정하기</a>
-
-    <form action="/posts/{{post.id}}/delete" method="post">
-      <input type="submit" value="삭제하기" />
-    </form>
-
-    <a href="/posts">게시판으로이동</a>
+      <div class="actions">
+        <a class="btn btn-sub" href="/posts">← 게시판으로 이동</a>
+        <div class="actions-right">
+          <a class="btn" href="/posts/{{post.id}}/edit">수정하기</a>
+          <form action="/posts/{{post.id}}/delete" method="post">
+            <input class="btn btn-danger" type="submit" value="삭제하기" />
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
