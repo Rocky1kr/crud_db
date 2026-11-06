@@ -1,5 +1,8 @@
-/* 게시판 공통 스타일 - Bootstrap 위에 DESIGN.md 색상/크기를 덮어씁니다.
-   Bootstrap 클래스 이름과 겹치지 않도록 모든 클래스는 board- 로 시작합니다. */
+/* 게시판 공통 스타일 - Bootstrap 위에 design/design.md 색상/크기를 덮어씁니다.
+   Bootstrap 클래스 이름과 겹치지 않도록 모든 클래스는 board- 로 시작합니다.
+
+   디자인 핵심: 화면마다 큰 제목 하나가 주인공이고, 그 아래 굵은 선에서 내용이 시작됩니다.
+   내용은 상자(카드)에 넣지 않고, 가는 줄로만 나눕니다. */
 
 /* ===== 색상 변수 =====
    <html data-bs-theme="dark"> 이면 다크 색, "light" 이면 라이트 색을 씁니다.
@@ -8,17 +11,17 @@
 :root,
 [data-bs-theme="dark"] {
   --board-bg: #1a1d1e;            /* 페이지 배경 */
-  --board-text: #e8eaea;          /* 기본 글자 */
+  --board-text: #e8eaea;          /* 기본 글자, 굵은 선 */
   --board-sub: #a0a6a8;           /* 보조 글자 */
-  --board-line: #3a3f41;          /* 바깥 테두리 / 머리글 아래 선 */
+  --board-line: #3a3f41;          /* 입력칸 테두리 */
   --board-row-line: #2c3032;      /* 줄 사이 구분선 */
   --board-hover: #23272a;         /* 줄 hover 배경 */
-  --board-badge-bg: #2a2f31;      /* 뱃지 배경 */
+  --board-badge-bg: #2a2f31;      /* 보조 버튼 배경 */
   --board-btn-bg: #e8ecf4;        /* 버튼 배경 */
   --board-btn-text: #1a1d1e;      /* 버튼 글자 */
   --board-btn-hover: #ffffff;     /* 버튼 hover 배경 */
   --board-input-bg: #23272a;      /* 입력칸 배경 */
-  --board-accent: #ff4d4f;        /* 강조 */
+  --board-accent: #ff4d4f;        /* 강조 (삭제) */
 }
 
 [data-bs-theme="light"] {
@@ -36,8 +39,10 @@
   --board-accent: #ff4d4f;
 }
 
+/* ===== 기본 ===== */
+
 .board-body {
-  padding: 24px 16px;
+  padding: 24px 16px 64px;
   background: var(--board-bg);
   color: var(--board-text);
   font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
@@ -47,18 +52,76 @@
   max-width: 900px;
 }
 
-.board-h1 {
-  font-size: 30px;
-  font-weight: bold;
+/* ===== 화면 머리 (모든 화면 공통) =====
+   왼쪽: 큰 제목 / 오른쪽: 버튼들 / 아래: 굵은 선 */
+
+.board-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--board-text); /* 내용이 시작되는 굵은 선 */
 }
 
-/* 글쓰기 버튼: Bootstrap .btn 의 변수만 바꿔서 색을 입힘 */
-.board-btn {
+/* 큰 제목 글꼴 (Black Han Sans). 크기는 화면마다 아래 클래스로 정함 */
+.board-display {
+  margin: 0;
+  font-family: "Black Han Sans", "Malgun Gothic", sans-serif;
+  font-weight: normal;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  word-break: keep-all;     /* 한글 단어가 중간에서 잘리지 않게 */
+  overflow-wrap: anywhere;  /* 아주 긴 영어/숫자는 줄바꿈 */
+}
+
+.board-display-xl { font-size: 72px; line-height: 0.95; } /* 목록 "게시판" */
+.board-display-lg { font-size: 48px; }                    /* 글쓰기, 글 수정 */
+.board-display-md { font-size: 40px; }                    /* 상세 화면의 글 제목 */
+
+/* 제목 아래 작은 설명 (예: 글 4개) */
+.board-head-sub {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--board-sub);
+}
+
+/* 머리 위쪽 작은 줄 (상세 화면: 돌아가기 링크 + 테마 버튼) */
+.board-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.board-back {
+  font-size: 14px;
+  color: var(--board-sub);
+  text-decoration: none;
+}
+
+.board-back:hover {
+  color: var(--board-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ===== 버튼 ===== */
+
+/* 기본 버튼 (글쓰기, 등록 등): Bootstrap .btn 의 변수만 바꿔서 색을 입힘 */
+.board-btn,
+.board-btn-sub,
+.board-btn-danger {
   --bs-btn-padding-x: 18px;
   --bs-btn-padding-y: 10px;
   --bs-btn-font-size: 14px;
   --bs-btn-font-weight: bold;
   --bs-btn-border-radius: 8px;
+  --bs-btn-focus-box-shadow: 0 0 0 2px var(--board-bg), 0 0 0 4px var(--board-text);
+}
+
+.board-btn {
   --bs-btn-color: var(--board-btn-text);
   --bs-btn-bg: var(--board-btn-bg);
   --bs-btn-border-color: var(--board-btn-bg);
@@ -70,94 +133,8 @@
   --bs-btn-active-border-color: var(--board-btn-hover);
 }
 
-/* 표를 감싸는 둥근 테두리 */
-.board-card {
-  border: 1px solid var(--board-line);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* 표: Bootstrap .table 의 변수만 바꿔서 색을 입힘 */
-.board-table {
-  --bs-table-bg: transparent;
-  --bs-table-color: var(--board-text);
-  --bs-table-border-color: var(--board-row-line);
-  --bs-table-hover-bg: var(--board-hover);
-  --bs-table-hover-color: var(--board-text);
-}
-
-.board-table thead th {
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: normal;
-  color: var(--board-sub);
-  border-bottom-color: var(--board-line);
-}
-
-.board-table tbody td {
-  padding: 14px 16px;
-  vertical-align: middle;
-}
-
-.board-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-.board-num {
-  width: 90px;
-  text-align: center;
-}
-
-/* 번호 뱃지: Bootstrap .badge + .rounded-pill 위에 색만 바꿈 */
-.board-badge {
-  --bs-badge-padding-y: 4px;
-  --bs-badge-font-size: 13px;
-  --bs-badge-font-weight: normal;
-  --bs-badge-color: var(--board-sub);
-  min-width: 52px;
-  background: var(--board-badge-bg);
-}
-
-.board-title-link {
-  color: var(--board-text);
-  font-size: 16px;
-  text-decoration: none;
-}
-
-.board-title-link:hover {
-  color: var(--board-text);
-  text-decoration: underline;
-}
-
-.board-empty {
-  padding: 40px !important;
-  color: var(--board-sub) !important;
-}
-
-/* ===== 상세 페이지 (detail.html) ===== */
-
-.board-post-title {
-  padding: 16px;
-  font-size: 30px;
-  font-weight: bold;
-  border-bottom: 1px solid var(--board-line);
-}
-
-.board-post-content {
-  min-height: 160px;
-  padding: 24px 16px;
-  font-size: 16px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-
-/* 보조 버튼 (게시판으로 이동, 취소, 테마 전환) */
+/* 보조 버튼 (취소, 테마 전환) */
 .board-btn-sub {
-  --bs-btn-padding-x: 18px;
-  --bs-btn-padding-y: 10px;
-  --bs-btn-font-size: 14px;
-  --bs-btn-font-weight: bold;
-  --bs-btn-border-radius: 8px;
   --bs-btn-color: var(--board-sub);
   --bs-btn-bg: var(--board-badge-bg);
   --bs-btn-border-color: var(--board-badge-bg);
@@ -171,11 +148,6 @@
 
 /* 삭제 버튼: 보조 버튼 모양 + 강조색 글자 */
 .board-btn-danger {
-  --bs-btn-padding-x: 18px;
-  --bs-btn-padding-y: 10px;
-  --bs-btn-font-size: 14px;
-  --bs-btn-font-weight: bold;
-  --bs-btn-border-radius: 8px;
   --bs-btn-color: var(--board-accent);
   --bs-btn-bg: var(--board-badge-bg);
   --bs-btn-border-color: var(--board-badge-bg);
@@ -187,38 +159,124 @@
   --bs-btn-active-border-color: var(--board-hover);
 }
 
-/* 댓글 */
-.board-h2 {
-  font-size: 16px;
-  font-weight: bold;
+/* ===== 목록 화면 (list.html) ===== */
+
+/* Bootstrap 표의 배경/글자색을 우리 색으로 */
+.board-list-table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--board-text);
+  margin: 0;
 }
 
-.board-comment-item {
-  padding: 14px 16px;
+.board-list-table tbody td {
+  padding: 18px 8px;
   border-bottom: 1px solid var(--board-row-line);
-  font-size: 16px;
-  line-height: 1.6;
-  white-space: pre-wrap;
+  vertical-align: baseline;
 }
 
-.board-comment-item:last-child {
-  border-bottom: 0;
+/* 번호: 큰 숫자, 보조색, 숫자 폭을 같게 맞춰 세로로 줄이 맞음 */
+.board-list-num {
+  width: 72px;
+  text-align: right;
+  padding-right: 24px !important;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--board-sub);
 }
 
-.board-comment-item:hover {
+.board-list-link {
+  font-size: 17px;
+  color: var(--board-text);
+  text-decoration: none;
+}
+
+/* 줄 전체가 링크라서, 줄에 마우스를 올리면 배경 + 밑줄 */
+.board-list-row:hover td {
   background: var(--board-hover);
 }
 
-.board-comment-empty {
-  padding: 24px;
+.board-list-row:hover .board-list-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* 키보드(Tab)로 이동할 때 줄 전체에 테두리 */
+.board-list-link:focus-visible {
+  outline: none;
+}
+
+.board-list-link:focus-visible::after {
+  outline: 2px solid var(--board-text);
+  outline-offset: -2px;
+}
+
+/* 빈 목록 / 빈 댓글 */
+.board-empty {
+  text-align: center;
+  padding: 56px 16px !important;
   color: var(--board-sub);
+  border-bottom: none !important;
+}
+
+/* ===== 상세 화면 (detail.html) ===== */
+
+.board-post-content {
+  min-height: 160px;
+  margin: 0;
+  padding: 32px 0;
+  font-size: 17px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  border-bottom: 1px solid var(--board-row-line);
+}
+
+/* 수정 / 삭제 버튼 줄 */
+.board-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* 댓글 */
+.board-comments {
+  margin-top: 64px;
+}
+
+.board-h2 {
+  margin: 0;
+  padding-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--board-text);
+}
+
+.board-comment-list {
+  margin: 0 0 24px;
+}
+
+.board-comment-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--board-row-line);
+  font-size: 16px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.board-comment-list .board-empty {
+  padding: 32px 16px !important;
   font-size: 14px;
 }
 
 /* ===== 입력 폼 (new.html, edit.html, 댓글) ===== */
 
+.board-form {
+  padding-top: 32px;
+}
+
 .board-label {
   font-size: 14px;
+  font-weight: bold;
   color: var(--board-sub);
 }
 
@@ -235,16 +293,33 @@
 .board-input:focus {
   background: var(--board-input-bg);
   color: var(--board-text);
-  border-color: var(--board-btn-bg);
-  box-shadow: none;
+  border-color: var(--board-text);
+  box-shadow: 0 0 0 1px var(--board-text);
+}
+
+.board-input::placeholder {
+  color: var(--board-sub);
 }
 
 .board-textarea {
-  min-height: 220px;
-  line-height: 1.6;
+  min-height: 280px;
+  line-height: 1.7;
 }
 
 .board-comment-textarea {
   min-height: 90px;
   line-height: 1.6;
+}
+
+/* ===== 휴대폰처럼 좁은 화면 ===== */
+@media (max-width: 576px) {
+  .board-display-xl { font-size: 52px; }
+  .board-display-lg { font-size: 36px; }
+  .board-display-md { font-size: 30px; }
+
+  .board-list-num {
+    width: 48px;
+    padding-right: 12px !important;
+    font-size: 16px;
+  }
 }
